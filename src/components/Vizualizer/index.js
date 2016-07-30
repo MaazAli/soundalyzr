@@ -21,6 +21,12 @@ class Vizualizer extends Component {
     Paper.view.onFrame = this.onFrame.bind(this)
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.streamUrl != nextProps.streamUrl) {
+      this.setupAudio(nextProps.streamUrl)
+    }
+  }
+
   drawView() {
     // The amount of circles we want to make:
     this.count = 256
@@ -47,7 +53,9 @@ class Vizualizer extends Component {
   }
 
   onResize(event) {
-    // handle resizing in some nice manner
+    // Remove the children and redraw view on resize!
+    Paper.project.activeLayer.removeChildren()
+    this.drawView()
   }
 
   onFrame(event) {
@@ -87,12 +95,6 @@ class Vizualizer extends Component {
 
   getRandomDegree() {
     return Math.random() * (360 - 1) + 1
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.streamUrl != nextProps.streamUrl) {
-      this.setupAudio(nextProps.streamUrl)
-    }
   }
 
   setupAudio(streamUrl) {
