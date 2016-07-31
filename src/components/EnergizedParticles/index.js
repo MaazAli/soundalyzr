@@ -99,7 +99,7 @@ class EnergizedParticles extends Component {
 
   render() {
     return (
-      <div>
+      <div className={styles.energizedParticles}>
         <canvas id="energized-particles-canvas" data-paper-resize/>
       </div>
     )
