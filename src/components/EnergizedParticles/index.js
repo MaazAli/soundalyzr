@@ -16,8 +16,8 @@ class EnergizedParticles extends Component {
   }
 
   componentDidMount() {
-    var vizCanvas = document.getElementById('vizualizer-canvas')
-    Paper.setup(vizCanvas)
+    let canvas = document.getElementById('energized-particles-canvas')
+    Paper.setup(canvas)
     this.drawView()
     Paper.view.onResize = this.onResize.bind(this)
     Paper.view.onFrame = this.onFrame.bind(this)
@@ -68,13 +68,13 @@ class EnergizedParticles extends Component {
 
         item.opacity = newOpacity
         item.scale(newScale)
-        item.position.y += (10 - newVal) / 5
-
-        if (item.bounds.bottom > Paper.view.size.height) {
-          item.position.y = -item.bounds.height;
-        }
-        // this.vector.angle = this.getRandomDegree()
-
+        // item.position.y += (10 - newVal) / 5
+        //
+        // if (item.bounds.bottom > Paper.view.size.height) {
+        //   item.position.y = -item.bounds.height;
+        // }
+        this.vector.angle = this.getRandomDegree()
+        this.vector.length = newVal
         // if (i > 200) {
         //   this.vector.length = newVal > 0 ? newVal + 5 : 0
         // } else if (i > 150 && i <= 200) {
@@ -97,7 +97,7 @@ class EnergizedParticles extends Component {
   render() {
     return (
       <div>
-        <canvas id="vizualizer-canvas" data-paper-resize/>
+        <canvas id="energized-particles-canvas" data-paper-resize/>
       </div>
     )
   }

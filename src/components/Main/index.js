@@ -2,7 +2,7 @@ import styles from './style.scss'
 
 import React, { Component } from 'react'
 
-import Vizualizer from '../Vizualizer'
+import Visualizer from '../Visualizer'
 import SongSelector from '../SongSelector'
 import AudioPlayer from '../AudioPlayer'
 
@@ -24,17 +24,17 @@ export default class Main extends Component {
   render() {
     const { streamUrl, analyser } = this.state
 
-    var $vizualizer = ""
+    var $visualizer = ""
 
     if (analyser) {
-      $vizualizer = <Vizualizer name="default" analyser={analyser}/>
+      $visualizer = <Visualizer visualizationName="default" analyser={analyser}/>
     }
 
     return (
       <div className={styles.main}>
         <SongSelector onChangeSong={this.onHandleSongChange.bind(this)} />
         <AudioPlayer streamUrl={streamUrl} onAnalyserChange={this.onAnalyserChange.bind(this)} />
-        {$vizualizer}
+        {$visualizer}
       </div>
     )
   }
