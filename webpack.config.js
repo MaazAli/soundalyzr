@@ -20,7 +20,7 @@ var config = {
       'react': 'react-lite',
       'react-dom': 'react-lite'
     },
-    modulesDirectories: ['node_modules', 'src/components']
+    modulesDirectories: ['node_modules', 'src/components', 'src/components/Vizualizations']
   },
 
   module: {
