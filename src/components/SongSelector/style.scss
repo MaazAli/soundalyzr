@@ -2,5 +2,12 @@
 
 .songSelector {
   position: relative;
-    z-index: 100;
+    z-index: 200;
+
+  input {
+    color: $grey300;
+    background-color: rgba(0, 0, 0, 0.3);
+    border: none;
+    border-radius: 0;
+  }
 }

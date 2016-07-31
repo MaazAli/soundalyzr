@@ -4,10 +4,9 @@ $sectionPadding: 5px;
 
 canvas {
   position: absolute;
+    z-index: 100;
     top: 0;
     left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('http://randomwallpapers.net/snow-dark-1920x1200-wallpaper285131.jpg');
-  background-size: cover;
 }
