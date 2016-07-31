@@ -10,6 +10,7 @@ class EnergizedParticles extends Component {
     this.particleCount = this.props.particleCount || 256
     this.vector = new Paper.Point(5,5)
     this.particleRadius = 5
+    this.minRadius = 5
     this.soundData = new Uint8Array(this.props.analyser.frequencyBinCount)
 
     this.drawView.bind(this)
@@ -55,43 +56,45 @@ class EnergizedParticles extends Component {
   	for (let i = 0; i < this.particleCount; i++) {
   		let item = Paper.project.activeLayer.children[i]
 
+      this.vector.angle = this.getRandomDegree()
       this.vector.length = 0
 
-      if (analyser) {
-        let oldVal = this.soundData[i]
-        let oldRange = (255 - 0)
-        let newRange = (10 - 0)
-        let newVal = (((oldVal) * newRange) / oldRange)
+      let freqVal = this.soundData[i]
+      let zeroTo20 = this.freqToRange(freqVal, 20)
+      let zeroTo10 = this.freqToRange(freqVal, 10)
+      let zeroTo5 = this.freqToRange(freqVal, 5)
+      let zeroTo1 = this.freqToRange(freqVal, 1)
 
-        let newOpacity = (((this.soundData[i]) * 1) / 255)
-        let newScale  = (newVal / item.bounds.height) * item.bounds.height > 5 ? newVal / item.bounds.height : (5/item.bounds.height)
-
-        item.opacity = newOpacity
-        item.scale(newScale)
-        // item.position.y += (10 - newVal) / 5
-        //
-        // if (item.bounds.bottom > Paper.view.size.height) {
-        //   item.position.y = -item.bounds.height;
-        // }
-        this.vector.angle = this.getRandomDegree()
-        this.vector.length = newVal
-        // if (i > 200) {
-        //   this.vector.length = newVal > 0 ? newVal + 5 : 0
-        // } else if (i > 150 && i <= 200) {
-        //   this.vector.length = (newVal - 1) > 0 ? newVal - 1 : 0
-        // } else if (i > 100 && i <= 150) {
-        //   this.vector.length = (newVal - 2) > 0 ? newVal - 2 : 0
-        // } else {
-        //   this.vector.length = (newVal - 5) > 0 ? newVal - 5 : 0
-        // }
+      let newOpacity = zeroTo1
+      let newScale = (zeroTo10 / item.bounds.height)
+      if (newScale * item.bounds.height < this.minRadius) {
+        newScale = (5/item.bounds.height)
       }
 
+      this.vector.length = zeroTo5
+
+      if (i > 200) {
+        // Low Frequency
+        newScale += 0.3
+        this.vector.length = this.vector.length + 3
+        newOpacity = newOpacity == 0 ? 0 : newOpacity + 0.3
+      } else if (i > 150 && i <= 200) {
+        newScale += 0.2
+      } else if (i > 100 && i <= 150) {
+      }
+
+      item.opacity = newOpacity
+      item.scale(newScale)
       item.position = item.position.add(this.vector)
   	}
   }
 
   getRandomDegree() {
     return Math.random() * (360 - 1) + 1
+  }
+
+  freqToRange(freqVal, newRange) {
+    return ((freqVal) * newRange) / (this.particleCount - 1)
   }
 
   render() {
