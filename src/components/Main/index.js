@@ -10,30 +10,35 @@ export default class Main extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      streamUrl: `${process.env.API_URL}/tracks/177683325/stream?client_id=${process.env.CLIENT_ID}`,
+      defaultSongUrl: "https://soundcloud.com/blvksheepmusic/alesso-hereos-blvk-sheep-trap-remix",
+      songRecord: null,
       analyser: null
     }
     this.onHandleSongChange.bind(this)
   }
-  onHandleSongChange(newStreamUrl) {
-    this.setState({streamUrl: newStreamUrl})
+  onHandleSongChange(songRecord) {
+    this.setState({songRecord: songRecord})
   }
   onAnalyserChange(analyser) {
     this.setState({analyser: analyser})
   }
   render() {
-    const { streamUrl, analyser } = this.state
+    const { defaultSongUrl, analyser, songRecord } = this.state
 
-    var $visualizer = ""
-
+    let $visualizer = ""
+    let $audioPlayer = ""
     if (analyser) {
       $visualizer = <Visualizer visualizationName="default" analyser={analyser}/>
     }
 
+    if (songRecord) {
+      $audioPlayer = <AudioPlayer songRecord={songRecord} onAnalyserChange={this.onAnalyserChange.bind(this)} />
+    }
+
     return (
       <div className={styles.main}>
-        <SongSelector onChangeSong={this.onHandleSongChange.bind(this)} />
-        <AudioPlayer streamUrl={streamUrl} onAnalyserChange={this.onAnalyserChange.bind(this)} />
+        <SongSelector songUrl={defaultSongUrl} onChangeSong={this.onHandleSongChange.bind(this)} />
+        {$audioPlayer}
         {$visualizer}
       </div>
     )

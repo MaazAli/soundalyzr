@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import Mousetrap from 'mousetrap'
 
+import SongCard from '../SongCard'
+
 export default class AudioPlayer extends Component {
   constructor(props) {
     super(props)
@@ -13,7 +15,8 @@ export default class AudioPlayer extends Component {
   }
 
   componentDidMount() {
-    this.setupAudio(this.props.streamUrl)
+    const streamUrl = this.getStreamUrl(this.props.songRecord)
+    this.setupAudio(streamUrl)
 
     // Keyboard shortcuts
     Mousetrap.bind(['space'], this.togglePlay.bind(this))
@@ -21,13 +24,18 @@ export default class AudioPlayer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // If the new streamUrl is different, start playing the new song
-    if (this.props.streamUrl != nextProps.streamUrl) {
-      this.setupAudio(nextProps.streamUrl)
-    }
+    const streamUrl = this.getStreamUrl(this.props.songRecord)
+    this.setupAudio(nextProps.streamUrl)
+  }
+
+  getStreamUrl(songRecord) {
+    return `${songRecord.stream_url}?client_id=${process.env.CLIENT_ID}`
   }
 
   setupAudio(streamUrl) {
+    if (!streamUrl) {
+      return
+    }
     window.AudioContext = window.AudioContext||window.webkitAudioContext
     let context = new AudioContext()
 
@@ -105,6 +113,16 @@ export default class AudioPlayer extends Component {
     this.props.onAnalyserChange(analyser)
   }
   render() {
-    return <div/>
+    const { songRecord } = this.props
+    const { isPlaying, isMuted } = this.state
+    return (
+      <SongCard
+        record={songRecord}
+        isPlaying={isPlaying}
+        isMuted={isMuted}
+        onMuteToggle={this.toggleMute}
+        onPlayToggle={this.togglePlay}
+      />
+    )
   }
 }

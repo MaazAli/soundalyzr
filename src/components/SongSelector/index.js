@@ -7,16 +7,22 @@ class SongSelector extends Component {
   constructor(props) {
     super(props)
     this.onHandleKeyUp.bind(this)
-    this.getStreamUrl.bind(this)
+    this.getSong.bind(this)
+  }
+
+  componentWillMount() {
+    if (this.props.songUrl) {
+      this.getSong(this.props.songUrl)
+    }
   }
 
   onHandleKeyUp(e) {
     if (e.key === "Enter") {
-      this.getStreamUrl(e.target.value)
+      this.getSong(e.target.value)
     }
   }
 
-  getStreamUrl(soundCloudUrl) {
+  getSong(soundCloudUrl) {
     let url = `${process.env.API_URL}/resolve?url=${soundCloudUrl}&client_id=${process.env.CLIENT_ID}`
     var request = new XMLHttpRequest()
     let self = this
@@ -25,7 +31,7 @@ class SongSelector extends Component {
       if (request.readyState == 4 && request.status == 200) {
           let resp = JSON.parse(request.responseText)
           if (resp.streamable && resp.stream_url != "") {
-            self.props.onChangeSong(`${resp.stream_url}?client_id=${process.env.CLIENT_ID}`)
+            self.props.onChangeSong(resp)
           }
       }
     }
