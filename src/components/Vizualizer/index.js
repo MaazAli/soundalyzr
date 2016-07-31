@@ -36,9 +36,9 @@ class Vizualizer extends Component {
     // Create a symbol, which we will use to place instances of later:
     let path = new Paper.Path.Circle({
     	center: [0, 0],
-    	radius: 10,
+    	radius: 5,
     	fillColor: 'white',
-      opacity: 0.5
+      opacity: 1
     })
     let symbol = new Paper.Symbol(path)
 
@@ -47,7 +47,6 @@ class Vizualizer extends Component {
     	// The center position is a random point in the view:
     	let center = Paper.Point.random().multiply(Paper.view.size)
     	let placedSymbol = symbol.place(center)
-    	placedSymbol.scale(i / this.count)
       this.circleBounds.push(placedSymbol.bounds)
     }
   }
@@ -75,6 +74,11 @@ class Vizualizer extends Component {
         let newRange = (10 - 0)
         let newVal = (((oldVal) * newRange) / oldRange)
 
+        let newOpacity = (((this.soundData[i]) * 1) / 255)
+        let newScale  = (newVal / item.bounds.height) * item.bounds.height > 5 ? newVal / item.bounds.height : (5/item.bounds.height)
+
+        item.opacity = newOpacity
+        item.scale(newScale)
         this.vector.angle = this.getRandomDegree()
         // this.vector.length = newVal
         if (i > 200) {
