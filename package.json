@@ -26,6 +26,7 @@
     "ejs": "^2.4.2",
     "extract-text-webpack-plugin": "^1.0.1",
     "json-loader": "^0.5.4",
+    "mousetrap": "^1.6.0",
     "node-sass": "^3.8.0",
     "paper": "^0.10.2",
     "postcss-loader": "^0.9.1",
