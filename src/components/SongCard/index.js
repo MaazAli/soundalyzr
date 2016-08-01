@@ -6,16 +6,21 @@ export default class Main extends Component {
     super(props)
   }
   render() {
-    const { record } = this.props
+    const { record, isPlaying } = this.props
+    let playIconText = "play_arrow"
+    if (isPlaying) {
+      playIconText = "pause"
+    }
 
     return (
       <div className={styles.songCard}>
         <div className={styles.image}>
           <img src={record.artwork_url || record.user.avatar_url} />
+          <i className="material-icons">{playIconText}</i>
         </div>
         <div className={styles.mainContent}>
-          {record.title}
-          {record.user.username}
+          <div className={styles.title}>{record.title}</div>
+          <div className={styles.username}>{record.user.username}</div>
         </div>
       </div>
     )

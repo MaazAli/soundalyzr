@@ -24,8 +24,10 @@ export default class AudioPlayer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const streamUrl = this.getStreamUrl(this.props.songRecord)
-    this.setupAudio(nextProps.streamUrl)
+    if (this.getStreamUrl(nextProps.songRecord) != this.getStreamUrl(this.props.songRecord)) {
+      const streamUrl = this.getStreamUrl(nextProps.songRecord)
+      this.setupAudio(streamUrl)
+    }
   }
 
   getStreamUrl(songRecord) {

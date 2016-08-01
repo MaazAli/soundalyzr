@@ -1,8 +1,48 @@
 @import "../../styles/variables";
 
+$imageSize: 70px;
+
 .songCard {
-  position: relative;
+  position: absolute;
     z-index: 100;
+    bottom: 0;
+    left: 0;
   display: flex;
   padding: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.image {
+  position: relative;
+  width: $imageSize;
+  height: $imageSize;
+  margin-right: 10px;
+
+  img {
+    width: $imageSize;
+    height: $imageSize;
+  }
+
+  i {
+    position: absolute;
+      left: 0;
+    width: $imageSize;
+    height: $imageSize;
+    line-height: $imageSize;
+    text-align: center;
+    vertical-align: middle;
+    background-color: rgba(0,0,0,0.6);
+    color: #FFF;
+    font-size: $baseFontSize + 25px;
+  }
+}
+
+.mainContent {
+  color: $grey500;
+
+  .title {
+    color: $grey400;
+    font-size: $baseFontSize + 5px;
+    margin-bottom: 5px;
+  }
 }
