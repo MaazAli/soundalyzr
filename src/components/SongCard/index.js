@@ -6,7 +6,7 @@ export default class Main extends Component {
     super(props)
   }
   render() {
-    const { record, isPlaying } = this.props
+    const { record, isPlaying, onPlayToggle } = this.props
     let playIconText = "play_arrow"
     if (isPlaying) {
       playIconText = "pause"
@@ -16,7 +16,7 @@ export default class Main extends Component {
       <div className={styles.songCard}>
         <div className={styles.image}>
           <img src={record.artwork_url || record.user.avatar_url} />
-          <i className="material-icons">{playIconText}</i>
+          <i className="material-icons" onClick={onPlayToggle}>{playIconText}</i>
         </div>
         <div className={styles.mainContent}>
           <div className={styles.title}>{record.title}</div>

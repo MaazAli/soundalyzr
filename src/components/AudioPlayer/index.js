@@ -122,8 +122,8 @@ export default class AudioPlayer extends Component {
         record={songRecord}
         isPlaying={isPlaying}
         isMuted={isMuted}
-        onMuteToggle={this.toggleMute}
-        onPlayToggle={this.togglePlay}
+        onMuteToggle={this.toggleMute.bind(this)}
+        onPlayToggle={this.togglePlay.bind(this)}
       />
     )
   }
