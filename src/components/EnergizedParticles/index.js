@@ -12,8 +12,10 @@ class EnergizedParticles extends Component {
     this.particleRadius = 5
     this.minRadius = 5
     this.soundData = new Uint8Array(this.props.analyser.frequencyBinCount)
+    this.direction = []
 
     this.drawView.bind(this)
+    this.bounceItemIfNeeded.bind(this)
   }
 
   componentDidMount() {
@@ -39,6 +41,7 @@ class EnergizedParticles extends Component {
     	// The center position is a random point in the view:
     	let center = Paper.Point.random().multiply(Paper.view.size)
     	let placedSymbol = symbol.place(center)
+      this.direction.push(this.getRandomDegree())
     }
   }
 
@@ -56,8 +59,7 @@ class EnergizedParticles extends Component {
   	for (let i = 0; i < this.particleCount; i++) {
   		let item = Paper.project.activeLayer.children[i]
 
-      this.vector.angle = this.getRandomDegree()
-      this.vector.length = 0
+      this.vector.angle = this.direction[i]
 
       let freqVal = this.soundData[i]
       let zeroTo20 = this.freqToRange(freqVal, 20)
@@ -71,7 +73,7 @@ class EnergizedParticles extends Component {
         newScale = (5/item.bounds.height)
       }
 
-      this.vector.length = zeroTo5
+      this.vector.length = (5 - zeroTo5)
 
       if (i > 200) {
         // Low Frequency
@@ -86,7 +88,19 @@ class EnergizedParticles extends Component {
       item.opacity = newOpacity
       item.scale(newScale)
       item.position = item.position.add(this.vector)
+
+      this.bounceItemIfNeeded(item, i)
   	}
+  }
+
+  bounceItemIfNeeded(item, index) {
+    let rightWall = item.bounds.right > Paper.view.size.width
+    let leftWall = item.bounds.left < 0
+    let topWall = item.bounds.top < 0
+    let bottomWall = item.bounds.bottom > Paper.view.size.height
+    if (rightWall || leftWall || topWall || bottomWall) {
+      this.direction[index] = this.direction[index] + 90
+    }
   }
 
   getRandomDegree() {

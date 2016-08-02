@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 
 import styles from './style.scss'
 import EnergizedParticles from '../EnergizedParticles'
+import ElectrifiedLine from '../ElectrifiedLine'
 
 class Visualizer extends Component {
   constructor(props) {
