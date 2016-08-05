@@ -9,7 +9,7 @@ class ElectrifiedLine extends Component {
 
     this.segmentCount = this.props.analyser.frequencyBinCount
     this.maxHeight = this.props.analyser.frequencyBinCount
-    this.soundData = new Float32Array(this.props.analyser.frequencyBinCount)
+    this.soundData = new Uint8Array(this.props.analyser.frequencyBinCount)
 
     this.drawView.bind(this)
   }
@@ -43,7 +43,7 @@ class ElectrifiedLine extends Component {
 
   onFrame(event) {
     let { analyser } = this.props
-    analyser.getFloatFrequencyData(this.soundData)
+    analyser.getByteTimeDomainData(this.soundData)
     // Run through the active layer's children list and change
   	// the position of the placed symbols:
 
