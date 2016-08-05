@@ -14,6 +14,7 @@
   "author": "Maaz Ali",
   "license": "ISC",
   "dependencies": {
+    "query-string": "^4.2.2",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
     "webpack": "^1.13.1"
