@@ -76,7 +76,7 @@ class EnergizedParticles extends Component {
         newScale = (zeroTo20 * 2 / item.bounds.height)
         newOpacity = newOpacity == 0 ? 0 : newOpacity + 0.3
       } else if (i > 150 && i <= 200) {
-        newScale += 0.2
+        newScale = (zeroTo20 * 1.2 / item.bounds.height)
       } else if (i > 100 && i <= 150) {
       }
 
@@ -86,7 +86,7 @@ class EnergizedParticles extends Component {
 
       item.opacity = newOpacity
       item.scale(newScale)
-      item.position.y += zeroTo1
+      item.position.y += zeroTo5
 
       this.bounceItemIfNeeded(item, i)
   	}
