@@ -66,41 +66,44 @@ class EnergizedParticles extends Component {
       let zeroTo10 = this.freqToRange(freqVal, 10)
       let zeroTo5 = this.freqToRange(freqVal, 5)
       let zeroTo1 = this.freqToRange(freqVal, 1)
+      let zeroToHalf = this.freqToRange(freqVal, 0.5)
 
-      let newOpacity = zeroTo1
-      let newScale = (zeroTo10 / item.bounds.height)
-      if (newScale * item.bounds.height < this.minRadius) {
-        newScale = (5/item.bounds.height)
-      }
-
-      this.vector.length = (5 - zeroTo5)
+      let newOpacity = zeroToHalf
+      let newScale = (zeroTo20 / item.bounds.height)
 
       if (i > 200) {
         // Low Frequency
-        newScale += 0.3
-        this.vector.length = this.vector.length + 3
+        newScale = (zeroTo20 * 2 / item.bounds.height)
         newOpacity = newOpacity == 0 ? 0 : newOpacity + 0.3
       } else if (i > 150 && i <= 200) {
         newScale += 0.2
       } else if (i > 100 && i <= 150) {
       }
 
+      if (newScale * item.bounds.height < this.minRadius) {
+        newScale = (5/item.bounds.height)
+      }
+
       item.opacity = newOpacity
       item.scale(newScale)
-      item.position = item.position.add(this.vector)
+      item.position.y += zeroTo1
 
       this.bounceItemIfNeeded(item, i)
   	}
   }
 
   bounceItemIfNeeded(item, index) {
-    let rightWall = item.bounds.right > Paper.view.size.width
-    let leftWall = item.bounds.left < 0
-    let topWall = item.bounds.top < 0
-    let bottomWall = item.bounds.bottom > Paper.view.size.height
-    if (rightWall || leftWall || topWall || bottomWall) {
-      this.direction[index] = this.direction[index] + 90
-    }
+    // let rightWall = item.bounds.right > Paper.view.size.width
+    // let leftWall = item.bounds.left < 0
+    // let topWall = item.bounds.top < 0
+    // let bottomWall = item.bounds.bottom > Paper.view.size.height
+    // if (rightWall || leftWall || topWall || bottomWall) {
+    //   this.direction[index] = this.direction[index] + 90
+    // }
+
+    if (item.bounds.top > Paper.view.size.height) {
+			item.position.y = -item.bounds.height
+		}
   }
 
   getRandomDegree() {
